@@ -145,9 +145,9 @@ prompt_lime_git_dirty() {
 
 prompt_lime_symbol() {
   if [ $UID -eq 0 ]; then
-    echo -n '#'
+    echo -n '\n#'
   else
-    echo -n '$'
+    echo -n '\n$'
   fi
 }
 
