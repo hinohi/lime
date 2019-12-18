@@ -102,6 +102,7 @@ prompt_lime_render() {
   prompt_lime_dir
   echo -n ' '
   prompt_lime_git
+  prompt_lime_aws_profile
   echo -n "${prompt_lime_rendered_symbol}"
 }
 
@@ -141,6 +142,12 @@ prompt_lime_git_dirty() {
   fi
 
   [ -n "$(command git status $git_status_options)" ] && echo -n '*'
+}
+
+prompt_lime_aws_profile() {
+  if [[ -n "${AWS_PROFILE}" ]]; then
+    echo -n "(${AWS_PROFILE})"
+  fi
 }
 
 prompt_lime_symbol() {
