@@ -146,7 +146,13 @@ prompt_lime_git_dirty() {
 
 prompt_lime_aws_profile() {
   if [[ -n "${AWS_PROFILE}" ]]; then
-    echo -n "[${AWS_PROFILE}]"
+    echo -n "[p=${AWS_PROFILE}"
+    c=$(grep current-context $HOME/.kube/config 2> /dev/null)
+    if [[ $? = 0 ]]; then
+      echo -n ' k='
+      echo -n $c | sed 's:.*/::'
+    fi
+    echo -n ']'
   fi
 }
 
