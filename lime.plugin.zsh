@@ -145,12 +145,6 @@ prompt_lime_git_dirty() {
 }
 
 prompt_lime_aws_profile() {
-  local conf=$HOME/.aws/_profile
-  if [[ -f $conf ]]; then
-    export AWS_PROFILE=$(cat $conf)
-  else
-    unset AWS_PROFILE
-  fi
   if [[ -n "${AWS_PROFILE}" ]]; then
     echo -n "[${AWS_PROFILE}]"
   fi
