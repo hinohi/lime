@@ -145,9 +145,9 @@ prompt_lime_git_dirty() {
 }
 
 prompt_lime_aws_profile() {
-  if [[ -n "${AWS_PROFILE}" ]]; then
-    echo -n "[p=${AWS_PROFILE}"
-    c=$(grep current-context $HOME/.kube/config 2> /dev/null)
+  if [[ -n "${AWS_VAULT}" ]]; then
+    echo -n "[p=${AWS_VAULT}"
+    c=$(cat $HOME/.kube/kubectx 2> /dev/null)
     if [[ $? = 0 ]]; then
       echo -n ' k='
       echo -n $c | sed 's:.*/::'
