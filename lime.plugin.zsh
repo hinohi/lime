@@ -103,6 +103,8 @@ prompt_lime_render() {
   echo -n ' '
   prompt_lime_git
   prompt_lime_aws_profile
+  echo -n ' '
+  prompt_lime_k8s_cluster
   echo -n "${prompt_lime_rendered_symbol}"
 }
 
@@ -145,14 +147,25 @@ prompt_lime_git_dirty() {
 }
 
 prompt_lime_aws_profile() {
-  if [[ -n "${AWS_VAULT}" ]]; then
-    echo -n "[p=${AWS_VAULT}"
-    c=$(grep current-context $HOME/.kube/config 2> /dev/null)
-    if [[ $? = 0 ]]; then
-      echo -n ' k='
-      echo -n $c | sed 's:.*/::'
+  if [[ -n "${AWS_PROFILE}" ]]; then
+    if [[ ${AWS_PROFILE} =~ st ]]; then
+      echo -n "p=%F{yellow}${AWS_PROFILE}%f"
+    else
+      echo -n "p=%F{red}${AWS_PROFILE}%f"
     fi
-    echo -n ']'
+  fi
+}
+
+prompt_lime_k8s_cluster() {
+  local c
+  c=$(grep current-context $HOME/.kube/config 2> /dev/null)
+  if [[ $? = 0 ]]; then
+    c="$(echo -n $c | sed 's:.*/::' | xargs echo -n)"
+    if [[ $c =~ prd ]]; then
+      echo -n "k=%F{red}$c%f"
+    else
+      echo -n "k=%F{yellow}$c%f"
+    fi
   fi
 }
 
