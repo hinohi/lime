@@ -147,11 +147,17 @@ prompt_lime_git_dirty() {
 }
 
 prompt_lime_aws_profile() {
-  if [[ -n "${AWS_PROFILE}" ]]; then
-    if [[ ${AWS_PROFILE} =~ st ]]; then
-      echo -n "p=%F{yellow}${AWS_PROFILE}%f"
+  local aws
+  if [[ -n "${AWS_VAULT}" ]]; then
+    aws="${AWS_VAULT}"
+  elif [[ -n "${AWS_PROFILE}" ]]; then
+    aws="${AWS_PROFILE}"
+  fi
+  if [[ -n "${aws}" ]]; then
+    if [[ ${aws} =~ st ]]; then
+      echo -n "p=%F{yellow}${aws}%f"
     else
-      echo -n "p=%F{red}${AWS_PROFILE}%f"
+      echo -n "p=%F{red}${aws}%f"
     fi
   fi
 }
